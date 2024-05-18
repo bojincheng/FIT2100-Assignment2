@@ -1,0 +1,221 @@
+Author: Bojin Cheng
+Start date: 18/09/2022
+Last modified: 09/10/2022
+
+Notes: 
+Some idea of the tasks are inspired from online.
+
+References:
+geeksforgeeks.org/program-for-fcfs-cpu-scheduling-set-1/
+geeksforgeeks.org/deadline-monotonic-cpu-scheduling/
+mycareerwise.com/content/edf-scheduling-process-and-example/content/exam/gate/computer-science
+
+1. The process data file named "processes.txt" make sure they are in the same directory.
+2. All the valid commands above will output a result file named "results-tasknum.txt" in the current directory.
+3. Assume the path is /home/student/Desktop/ass2/ and all the files are inside this path.
+
+/* Task1*/
+Assumption: A process should still continue to run 
+even if it does not meet its deadline(Taken from the assignment specification).
+
+How to compile:
+gcc task1-32445482.c -o t1
+
+Example commands:
+1.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective states
+(refer to assignment specifications).
+*/
+Command:
+./t1 processes.txt
+
+2.
+/*If given the wrong file name, print the error message,
+assuming the file "process.txt" does not existed
+*/
+Command:
+./t1 process.txt
+
+3.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications).
+This is same to "./t1 processes.txt" as the user can input the "processes.txt" 
+or if the user does not put this file
+./t1 still open "processes.txt" by default.
+*/
+Command:
+./t1
+
+4.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+*/
+Command:
+./t1 testing.txt
+
+5.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+and the user will give the correct absolute file path.
+*/
+Command:
+./t1 /home/student/Desktop/ass2/testing.txt
+
+6.
+/*This will given the error message "NO such file or directory"
+as there is no file named "testings.txt".
+*/
+Command:
+./t1 /home/student/Desktop/ass2/testings.txt
+
+
+/* Task2*/
+Assumption: The newly arriving process gets higher priority
+(stay ahead) in the ready queue if a process gets preempted at the same time
+(Taken from the assignment specification).
+
+How to compile:
+gcc task2-32445482.c -o t2
+
+Example commands:
+1.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications).
+*/
+Command:
+./t2 processes.txt
+
+2.
+/*If given the wrong file name, print the error message,
+assuming the file "process.txt" does not existed
+*/
+Command:
+./t2 process.txt
+
+3.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications).
+This is same to "./t2 processes.txt" as the user can input the "processes.txt" 
+or if the user does not put this file
+./t2 still open "processes.txt" by default.
+*/
+Command:
+./t2
+
+4.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+*/
+Command:
+./t2 testing.txt
+
+5.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+and the user will give the correct absolute file path.
+*/
+Command:
+./t2 /home/student/Desktop/ass2/testing.txt
+
+6.
+/*This will given the error message "NO such file or directory"
+as there is no file named "testings.txt".
+*/
+Command:
+./t2 /home/student/Desktop/ass2/testings.txt
+
+
+/* Task3*/
+Assumption: If the newly entered process has the smaller deadline compare to the current running process
+the one has the smaller deadline value will be prioritised and the current running process will become ready state.
+(Taken from the assignment specification).
+For this task refer to function header comment and inline comment for more details.
+
+
+Why and how it works:
+In DLB() function, assume the max number of seconds of a process's deadline is 1000 seconds. 
+
+First two while loops executed and pcb_t* processes = & proc[i] is used to access pcb_t struct and use the memory location of the proc[i] to access each process that being scanned from the main() function into pcb_t instance(called "processes"). Check the process's entryTime == duration(0 at the beginning), so proc_entered(entered process counter) is incremented.
+Then print message with the process name(P1) and use arrow notation to access pcb_t processes instance and update its states to READY state. 
+
+Second, if the newly process has a smaller deadline value(compare to the current running process and the if loop checks whether the "proc_entered > 1"), put the current running process into read state and update the newly process to running state and update the min_deadline_val to the newly process as it has the smaller deadline value. Then print the message.
+
+Third, if the newly process has a bigger deadline value than the current running process, put it into temp_proc array and waits the current process's completion or no newly process enters the system.
+temp_proc[head] = processes is used to update the temporary array with the process. Update the process's state as READY.
+
+Fourth, first process's deadline is assigned to min_deadline variable and then put it into running state.
+
+Fifth, check if the running process's remainingTime is zero, calculate the turnaroundTime and waitTime and update the state to EXIT. Now check the temporary array and see whether its remainingTime is not zero and whether its deadline value is less than min_deadline_val,if yes, put this process to running from temporary array and update its deadline value to the min_deadline_val for next comparison.
+
+Last, increments the duration(used a timer) and decrements the remainingTime of the process.
+
+From the output result(results-3.txt), we can see process P1, P3, and P4 are able to finish their completions and meets their deadline value which maxmizes the number of the process completions.
+
+
+How to compile:
+gcc task3-32445482.c -o t3
+
+Example commands:
+1.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications).
+*/
+Command:
+./t3 processes.txt
+
+2.
+/*If given the wrong file name, print the error message,
+assuming the file "process.txt" does not existed
+*/
+Command:
+./t3 process.txt
+
+3.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications).
+This is same to "./t3 processes.txt" as the user can input the "processes.txt" 
+or if the user does not put this file
+./t3 still open "processes.txt" by default.
+*/
+Command:
+./t3
+
+4.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+*/
+Command:
+./t3 testing.txt
+
+5.
+/*In terminal, it will output the sequence of the processes 
+that are in their respective state
+(refer to assignment specifications)
+assuming the user will put other file, which named "testing.txt".
+and the user will give the correct absolute file path.
+*/
+Command:
+./t3 /home/student/Desktop/ass2/testing.txt
+
+6.
+/*This will given the error message "NO such file or directory"
+as there is no file named "testings.txt".
+*/
+Command:
+./t3 /home/student/Desktop/ass2/testings.txt
